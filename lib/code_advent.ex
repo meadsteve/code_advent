@@ -1,0 +1,1 @@
+CodeAdvent.DayOne.Solve.run
