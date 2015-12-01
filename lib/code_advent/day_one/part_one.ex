@@ -1,4 +1,4 @@
-defmodule CodeAdvent.DayOne.Solve do
+defmodule CodeAdvent.DayOne.PartOne do
   @file_path "lib/code_advent/day_one/input_data.txt"
 
   def run() do
