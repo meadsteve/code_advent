@@ -25,7 +25,7 @@ defmodule CodeAdvent.DayOne.PartTwo do
     {floor + change, n}
   end
 
-  defp answer_as_string({floor, move_number}), do: "#{move_number} at floor #{floor}"
+  defp answer_as_string({_, move_number}), do: "#{move_number}"
 
   defp add_one({x, n}), do: {x, n + 1}
 
