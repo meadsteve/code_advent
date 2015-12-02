@@ -1,4 +1,6 @@
 [
+  {"Day Two - Part ii:", CodeAdvent.DayTwo.PartTwo},
+  {"Day Two - Part 1:", CodeAdvent.DayTwo.PartOne},
   {"Day one - Part Deux:", CodeAdvent.DayOne.PartTwo},
   {"Day one - Part One:", CodeAdvent.DayOne.PartOne}
 ]
