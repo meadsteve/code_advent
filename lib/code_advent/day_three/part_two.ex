@@ -13,12 +13,12 @@ defmodule CodeAdvent.DayThree.PartTwo do
       |> String.graphemes
 
     santa_adventure = move_data
-      |> Enum.take_every(2)
+      |> Stream.take_every(2)
       |> Enum.reduce(%SantaAdventure{}, &move_santa/2)
 
     robo_adventure = move_data
-      |> Enum.drop(1)
-      |> Enum.take_every(2)
+      |> Stream.drop(1)
+      |> Stream.take_every(2)
       |> Enum.reduce(%SantaAdventure{}, &move_santa/2)
 
     santa_adventure
