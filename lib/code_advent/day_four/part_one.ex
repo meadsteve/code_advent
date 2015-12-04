@@ -32,6 +32,7 @@ defmodule CodeAdvent.DayFour.PartOne do
     spawn_link fn ->
       Enum.each(values, &check_md5(&1, string, goal_start_string, resond_to))
     end
+    send resond_to, {:nope}
   end
 
   defp check_md5(value, string, goal_start_string, resond_to) do
