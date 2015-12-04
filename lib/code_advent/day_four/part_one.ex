@@ -2,37 +2,41 @@ defmodule CodeAdvent.DayFour.PartOne do
 
   @batch_size 500
 
-  def run(), do: run("iwrupvqb", seed: 0)
+  def run(), do: run("iwrupvqb", seed: 0, target_zeros: 5)
 
-  def run(input, seed: x) do
+  def run(input, seed: x, target_zeros: target_zeros) do
     input
-      |> loop(seed: x)
+      |> loop(seed: x, target_zeros: target_zeros)
       |> answer_as_string
   end
 
-  defp loop(string), do: loop(string, 0)
-  defp loop(string, seed: x), do: loop(string, x)
+  defp loop(string, seed: x, target_zeros: target_zeros) do
+    goal_string = 1 .. target_zeros
+      |> Enum.map(fn _ -> "0" end)
+      |> Enum.join
+    loop(string, x, goal_string)
+  end
 
-  defp loop(string, value) do
+  defp loop(string, value, goal_start_string) do
     receive do
       {:answer, value}  -> value
      after
        0_001 ->
-         check_values(string, value .. value + @batch_size)
-         loop(string, value + @batch_size)
+         check_values(string, value .. (value + @batch_size), goal_start_string)
+         loop(string, value + @batch_size, goal_start_string)
      end
   end
 
-  defp check_values(string, values) do
+  defp check_values(string, values, goal_start_string) do
     resond_to = self
     spawn_link fn ->
-      Enum.each(values, &check_md5(&1, string, resond_to))
+      Enum.each(values, &check_md5(&1, string, goal_start_string, resond_to))
     end
   end
 
-  defp check_md5(value, string, resond_to) do
+  defp check_md5(value, string, goal_start_string, resond_to) do
     hash = md5("#{string}#{value}")
-    if hash |> String.starts_with?("00000") do
+    if hash |> String.starts_with?(goal_start_string) do
       send resond_to, {:answer, value}
     end
   end
