@@ -1,21 +1,37 @@
 defmodule DayFiveTest do
   use ExUnit.Case
 
-  @sample """
+  @part_one_sample """
   ugknbfddgicrmopn
   """
 
-  @bad_sample """
+  @part_one_bad_sample """
   steve
   eeezzcd
   """
 
-  test "counts nice strings" do
-    assert CodeAdvent.DayFive.PartOne.run(@sample) == "1"
+  test "PartOne: counts nice strings" do
+    assert CodeAdvent.DayFive.PartOne.run(@part_one_sample) == "1"
   end
 
-  test "doesn't count bad strings" do
-    assert CodeAdvent.DayFive.PartOne.run(@bad_sample) == "0"
+  test "PartOne: doesn't count bad strings" do
+    assert CodeAdvent.DayFive.PartOne.run(@part_one_bad_sample) == "0"
+  end
+
+  @part_two_sample """
+  qjhvhtzxzqqjkmpb
+  """
+
+  @part_two_bad_sample """
+  sxs
+  """
+
+  test "PartTwo: counts nice strings" do
+    assert CodeAdvent.DayFive.PartTwo.run(@part_two_sample) == "1"
+  end
+
+  test "PartTwo: doesn't count bad strings" do
+    assert CodeAdvent.DayFive.PartTwo.run(@part_two_bad_sample) == "0"
   end
 
 end
