@@ -3,6 +3,13 @@ defmodule CodeAdvent.DayFive.PartOne do
 
   @vowels ["a", "e", "i", "o", "u"]
 
+  @bad_pairs [
+    ["a", "b"],
+    ["c", "d"],
+    ["p", "q"],
+    ["x", "y"],
+  ]
+
   def run() do
     @file_path
       |> File.read!
@@ -36,10 +43,9 @@ defmodule CodeAdvent.DayFive.PartOne do
   defp has_double_letter?([_y | remaining]), do: has_double_letter?(remaining)
 
   defp has_bad_pair?([]), do: false
-  defp has_bad_pair?(["a", "b" | _]), do: true
-  defp has_bad_pair?(["c", "d" | _]), do: true
-  defp has_bad_pair?(["p", "q" | _]), do: true
-  defp has_bad_pair?(["x", "y" | _]), do: true
+  for [x, y] <- @bad_pairs do
+    defp has_bad_pair?([unquote(x), unquote(y) | _]), do: true
+  end
   defp has_bad_pair?([_y | remaining]), do: has_bad_pair?(remaining)
 
 
