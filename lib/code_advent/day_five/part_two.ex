@@ -8,7 +8,7 @@ defmodule CodeAdvent.DayFive.PartTwo do
       |> run
   end
 
-  def run (string) do
+  def run(string) do
     string
     |> String.split
     |> Stream.map(&String.graphemes/1)
