@@ -1,4 +1,4 @@
-defmodule CodeAdvent.DaySix.PartOne do
+defmodule CodeAdvent.DaySix.PartTwo do
   @file_path "lib/code_advent/day_six/input_data.txt"
 
   def run() do
@@ -11,8 +11,7 @@ defmodule CodeAdvent.DaySix.PartOne do
     string
       |> String.split("\n")
       |> Enum.reduce(new_light_map, &apply_instruction/2)
-      |> Stream.filter(&is_light_on?/1)
-      |> Enum.count
+      |> Enum.reduce(0, &add_brightness/2)
       |> answer_as_string
   end
 
@@ -20,9 +19,6 @@ defmodule CodeAdvent.DaySix.PartOne do
     Map.new
       |> apply_function_to_range(&set_light_off/2, [[0, 0], [999, 999]])
   end
-
-  defp is_light_on?({_pos, :on}), do: true
-  defp is_light_on?({_pos, :off}), do: false
 
   defp apply_instruction("turn on " <> range, %{} = lights) do
     lights
@@ -54,19 +50,25 @@ defmodule CodeAdvent.DaySix.PartOne do
   end
 
   defp set_light_on({x, y}, %{} = lights) do
-    Map.put(lights, x + 1000 * y, :on)
+    Map.update!(lights, x + 1000 * y, &on/1)
   end
 
   defp set_light_off({x, y}, %{} = lights) do
-    Map.put(lights, x + 1000 * y, :off)
+    Map.update(lights, x + 1000 * y, 0, &off/1)
   end
 
   defp toggle_light({x, y}, %{} = lights) do
     Map.update!(lights, x + 1000 * y, &toggle/1)
   end
 
-  defp toggle(:off), do: :on
-  defp toggle(:on),  do: :off
+  defp toggle(x), do: x + 2
+  defp on(x),     do: x + 1
+  defp off(0),    do: 0
+  defp off(x),    do: x - 1
+
+  defp add_brightness({_, light_brightness}, total_brightness) do
+    total_brightness + light_brightness
+  end
 
   defp get_range_coords(instruction) do
     instruction
