@@ -1,12 +1,13 @@
 defmodule DaySixTest do
   use ExUnit.Case
 
-
+  @tag :slow
   test "can switch on all lights from a single instruction" do
     instruction = "turn on 0,0 through 999,999"
     assert CodeAdvent.DaySix.PartOne.run(instruction) == "#{1000 * 1000}"
   end
 
+  @tag :slow
   test "can toggle off some lights" do
     instruction = """
     turn on 0,0 through 999,999
@@ -15,6 +16,7 @@ defmodule DaySixTest do
     assert CodeAdvent.DaySix.PartOne.run(instruction) == "#{(1000 * 1000) - 1000}"
   end
 
+  @tag :slow
   test "can turn off some lights" do
     instruction = """
     turn on 0,0 through 999,999
@@ -24,6 +26,7 @@ defmodule DaySixTest do
     assert CodeAdvent.DaySix.PartOne.run(instruction) == "#{(1000 * 1000) - 1000 - 4}"
   end
 
+  @tag :slow
   test "more light switching on" do
     instruction = """
     turn on 0,0 through 999,0
