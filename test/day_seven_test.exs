@@ -25,6 +25,7 @@ defmodule DaySevenTest do
   test "Wires with numeric left hand side return that value" do
     assert @simple_example
       |> CodeAdvent.DaySeven.PartOne.build_circuit()
+      |> CodeAdvent.DaySeven.PartOne.CircuitRunner.start_circuit()
       |> CodeAdvent.DaySeven.PartOne.CircuitRunner.wire(:x)
     == 123
   end
@@ -33,6 +34,7 @@ defmodule DaySevenTest do
     use Bitwise
     assert @simple_example
       |> CodeAdvent.DaySeven.PartOne.build_circuit()
+      |> CodeAdvent.DaySeven.PartOne.CircuitRunner.start_circuit()
       |> CodeAdvent.DaySeven.PartOne.CircuitRunner.wire(:d)
     == (123 |> band(456))
   end
@@ -41,6 +43,7 @@ defmodule DaySevenTest do
     use Bitwise
     assert @simple_example
       |> CodeAdvent.DaySeven.PartOne.build_circuit()
+      |> CodeAdvent.DaySeven.PartOne.CircuitRunner.start_circuit()
       |> CodeAdvent.DaySeven.PartOne.CircuitRunner.wire(:b)
     == (1 |> band(456))
   end
@@ -49,6 +52,7 @@ defmodule DaySevenTest do
     use Bitwise
     assert @simple_example
       |> CodeAdvent.DaySeven.PartOne.build_circuit()
+      |> CodeAdvent.DaySeven.PartOne.CircuitRunner.start_circuit()
       |> CodeAdvent.DaySeven.PartOne.CircuitRunner.wire(:e)
     == (123 |> bor(456))
   end
@@ -57,6 +61,7 @@ defmodule DaySevenTest do
     use Bitwise
     assert @simple_example
       |> CodeAdvent.DaySeven.PartOne.build_circuit()
+      |> CodeAdvent.DaySeven.PartOne.CircuitRunner.start_circuit()
       |> CodeAdvent.DaySeven.PartOne.CircuitRunner.wire(:f)
     == (123 |> bsl(2))
   end
@@ -65,6 +70,7 @@ defmodule DaySevenTest do
     use Bitwise
     assert @simple_example
       |> CodeAdvent.DaySeven.PartOne.build_circuit()
+      |> CodeAdvent.DaySeven.PartOne.CircuitRunner.start_circuit()
       |> CodeAdvent.DaySeven.PartOne.CircuitRunner.wire(:h)
     == (123 |> bnot)
   end
@@ -72,6 +78,7 @@ defmodule DaySevenTest do
   test "linking wrires work" do
     assert @simple_example
       |> CodeAdvent.DaySeven.PartOne.build_circuit()
+      |> CodeAdvent.DaySeven.PartOne.CircuitRunner.start_circuit()
       |> CodeAdvent.DaySeven.PartOne.CircuitRunner.wire(:z)
     == 123
   end
@@ -80,6 +87,7 @@ defmodule DaySevenTest do
     use Bitwise
     assert @simple_example
       |> CodeAdvent.DaySeven.PartOne.build_circuit()
+      |> CodeAdvent.DaySeven.PartOne.CircuitRunner.start_circuit()
       |> CodeAdvent.DaySeven.PartOne.CircuitRunner.wire(:a)
     == (123 |> band(456))
   end
@@ -88,13 +96,14 @@ defmodule DaySevenTest do
     use Bitwise
     circuit = @simple_example
       |> CodeAdvent.DaySeven.PartOne.build_circuit()
+      |> CodeAdvent.DaySeven.PartOne.CircuitRunner.start_circuit()
 
     assert CodeAdvent.DaySeven.PartOne.CircuitRunner.wire(circuit, :d) == 72
     assert CodeAdvent.DaySeven.PartOne.CircuitRunner.wire(circuit, :e) == 507
     assert CodeAdvent.DaySeven.PartOne.CircuitRunner.wire(circuit, :f) == 492
     assert CodeAdvent.DaySeven.PartOne.CircuitRunner.wire(circuit, :g) == 114
-    assert CodeAdvent.DaySeven.PartOne.CircuitRunner.wire(circuit, :h) == 65412
-    assert CodeAdvent.DaySeven.PartOne.CircuitRunner.wire(circuit, :i) == 65079
+    assert CodeAdvent.DaySeven.PartOne.CircuitRunner.wire(circuit, :h) == -124
+    assert CodeAdvent.DaySeven.PartOne.CircuitRunner.wire(circuit, :i) == -457
     assert CodeAdvent.DaySeven.PartOne.CircuitRunner.wire(circuit, :x) == 123
     assert CodeAdvent.DaySeven.PartOne.CircuitRunner.wire(circuit, :y) == 456
   end
