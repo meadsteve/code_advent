@@ -9,15 +9,6 @@ defmodule CodeAdvent.DaySeven.PartOne.CircuitRunner do
     end
   end
 
-  defp get_func(%{component_func: func}, wire_label) do
-    func
-  end
-
-  defp get_func(bad_thing, wire_label) do
-    IO.puts "Got a bad thing: #{inspect bad_thing} when loading #{inspect wire_label}"
-    fn(_) -> nil end
-  end
-
   def start_circuit(%{} = circuit) do
     circuit
     |> Enum.map(fn {key, %{component_func: func}} ->
@@ -27,7 +18,7 @@ defmodule CodeAdvent.DaySeven.PartOne.CircuitRunner do
   end
 
   def run_unknown_circuit(load_fn) do
-    spawn fn ->
+    spawn_link fn ->
       receive do
         {:get_value, sender, circuit} ->
           value = load_fn.(circuit)
