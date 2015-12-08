@@ -17,22 +17,46 @@ defmodule CodeAdvent.DaySeven.PartOne.CircuitRunner do
     |> Enum.into(%{})
   end
 
+  def reset_circuit(%{} = circuit) do
+    circuit
+      |> Enum.each(fn {key, pid} ->
+        send pid, {:reset}
+      end)
+    circuit
+  end
+
+  def force_value(%{} = circuit, key, value) do
+    pid = circuit[key]
+    send pid, {:replace_value, value}
+    circuit
+  end
+
   def run_unknown_circuit(load_fn) do
-    spawn_link fn ->
-      receive do
-        {:get_value, sender, circuit} ->
-          value = load_fn.(circuit)
-          send sender, {:value, value}
-          running_known_circuit(value)
-      end
+    spawn_link fn -> running_unknown_circuit(load_fn) end
+  end
+
+  def running_unknown_circuit(load_fn) do
+    receive do
+      {:reset} ->
+        running_unknown_circuit(load_fn)
+      {:replace_value, new_value} ->
+        running_known_circuit({new_value, load_fn})
+      {:get_value, sender, circuit} ->
+        value = load_fn.(circuit)
+        send sender, {:value, value}
+        running_known_circuit({value, load_fn})
     end
   end
 
-  def running_known_circuit(value) do
+  def running_known_circuit({value, load_fn}) do
     receive do
       {:get_value, sender, circuit} ->
         send sender, {:value, value}
-        running_known_circuit(value)
+        running_known_circuit({value, load_fn})
+      {:reset} ->
+        run_unknown_circuit(load_fn)
+      {:replace_value, new_value} ->
+        running_known_circuit({new_value, load_fn})
     end
   end
 

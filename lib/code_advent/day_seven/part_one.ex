@@ -12,12 +12,16 @@ defmodule CodeAdvent.DaySeven.PartOne do
   end
 
   def run() do
+    get_running_circuit()
+      |> CircuitRunner.wire(:a)
+      |> answer_as_string
+  end
+
+  def get_running_circuit() do
     @file_path
       |> File.read!
       |> build_circuit
       |> CircuitRunner.start_circuit
-      |> CircuitRunner.wire(:a)
-      |> answer_as_string
   end
 
   def build_circuit(string) do
