@@ -5,12 +5,16 @@ defmodule CodeAdvent.DayNine.PartOne do
   @invalid_journey -1
 
   def run() do
-    @file_path
+    [best_destination] = @file_path
       |> File.read!
       |> String.split("\n", trim: true)
       |> run
-      |> answer_as_string
+      |> Enum.sort(fn({a,_}, {b,_}) -> a < b end)
+      |> Enum.take(1)
+
+    answer_as_string(best_destination)
   end
+
 
   def run(strings) do
     data = Stream.map(strings, &to_data/1)
@@ -18,14 +22,10 @@ defmodule CodeAdvent.DayNine.PartOne do
     distances = as_orig_to_dist_map(data)
     destinations = get_unique_destinations(distances)
 
-    [best_destination] = destinations
+    destinations
       |> Permutations.of_list
       |> Enum.map(fn stops -> {journey_length(stops, distances), stops} end)
       |> Enum.filter(fn {length, _} -> length != @invalid_journey end)
-      |> Enum.sort(fn({a,_}, {b,_}) -> a < b end)
-      |> Enum.take(1)
-
-    best_destination
   end
 
   defp to_data(line) do
