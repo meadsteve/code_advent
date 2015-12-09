@@ -2,7 +2,6 @@ defmodule CodeAdvent.DayNine.PartOne do
   @file_path "lib/code_advent/day_nine/input_data.txt"
 
   @input_pattern  ~r/^(?<orig>[a-z]+) to (?<dest>[a-z]+) = (?<distance>[0-9]+)/i
-  @invalid_journey -1
 
   def run() do
     [best_destination] = @file_path
@@ -56,13 +55,7 @@ defmodule CodeAdvent.DayNine.PartOne do
   defp journey_length([_], distances, total), do: total
   defp journey_length([from, to | remaining], distances, total) do
     distance = distances |> distance_between(from, to)
-    case distance do
-      @invalid_journey ->
-        IO.puts "invalid journey: #{from} -> #{to}"
-        @invalid_journey
-      _ ->
-        journey_length([to | remaining], distances, total + distance)
-    end
+    journey_length([to | remaining], distances, total + distance)
   end
 
   defp distance_between(distances, from, to) do
