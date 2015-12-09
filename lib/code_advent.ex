@@ -1,4 +1,5 @@
 [
+  {"9/1: ", CodeAdvent.DayNine.PartOne},
   {"Eighth day of codemas part one: ", CodeAdvent.DayEight.PartOne},
   {"Day Seven - 2: ", CodeAdvent.DaySeven.PartTwo},
   {"Day Seven - 1: ", CodeAdvent.DaySeven.PartOne},
