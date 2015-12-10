@@ -24,7 +24,6 @@ defmodule CodeAdvent.DayNine.PartOne do
     destinations
       |> Permutations.of_list
       |> Enum.map(fn stops -> {journey_length(stops, distances), stops} end)
-      |> Enum.filter(fn {length, _} -> length != @invalid_journey end)
   end
 
   defp to_data(line) do
