@@ -5,7 +5,7 @@ defmodule CodeAdvent.DayEleven.PartOne do
     get_next("hxbxwxba")
   end
 
-  defp get_next(previous) do
+  def get_next(previous) do
     candidate = increment(previous)
     if (Validator.valid?(candidate)) do
       candidate
@@ -31,7 +31,5 @@ defmodule CodeAdvent.DayEleven.PartOne do
   defp increment_char_list([last | rest]) do
     [last + 1 | rest]
   end
-
-
-  defp answer_as_string(number), do: "#{number}"
+  
 end
