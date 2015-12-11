@@ -23,13 +23,18 @@ defmodule CodeAdvent.DayEleven.PartOne do
       |> to_string
   end
 
-  defp increment_char_list([?z | rest]) do
-    # ++ is slow but yolo
-    'a' ++ increment_char_list(rest)
+  defp increment_char_list(chars) do
+    increment_char_list(chars, [])
   end
 
-  defp increment_char_list([last | rest]) do
-    [last + 1 | rest]
+  defp increment_char_list([?z | rest], prepend) do
+    increment_char_list(rest, ['a' | prepend])
   end
-  
+
+  defp increment_char_list([last | rest], prepend) do
+    prepend
+      |> Enum.reverse
+      |> Enum.concat([last + 1 | rest])
+  end
+
 end
