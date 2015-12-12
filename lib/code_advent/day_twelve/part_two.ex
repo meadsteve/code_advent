@@ -24,23 +24,20 @@ defmodule CodeAdvent.DayTwelve.PartTwo do
   end
   def is_red?(_), do: false
 
-  def get_sum(items) do
-    items
-      |> Enum.map(&flatten/1)
-      |> Enum.sum
-  end
-
-  def flatten({_key, x}), do: flatten(x)
-  def flatten(map) when is_map(map) do
+  def get_sum(map) when is_map(map) do
     if (is_red?(map)) do
       0
     else
       map |> Map.values |> get_sum
     end
   end
-  def flatten(x) when is_list(x), do: get_sum(x)
-  def flatten(x) when is_number(x) , do: x
-  def flatten(x) when is_binary(x) , do: 0
+  def get_sum(items) when is_list(items) do
+    items
+      |> Enum.map(&get_sum/1)
+      |> Enum.sum
+  end
+  def get_sum(x) when is_number(x) , do: x
+  def get_sum(x) when is_binary(x) , do: 0
 
   def as_string(x), do: "#{x}"
 
