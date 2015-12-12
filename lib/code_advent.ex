@@ -1,4 +1,6 @@
 [
+  {"dozen 2: ", CodeAdvent.DayTwelve.PartTwo},
+  {"dozen 1: ", CodeAdvent.DayTwelve.PartOne},
   {"11 - 2: ", CodeAdvent.DayEleven.PartTwo},
   {"11 - 1: ", CodeAdvent.DayEleven.PartOne},
   {"10.2: ", CodeAdvent.DayTen.PartTwo},
