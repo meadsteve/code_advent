@@ -10,11 +10,7 @@ defmodule CodeAdvent.DayEleven.Validator do
     && has_two_pairs?(chars)
   end
 
-  def has_sequence?([x, y, z | _rest])
-  when y == x + 1 and z == x + 2
-  do
-    true
-  end
+  def has_sequence?([x, y, z | _rest]) when y == x + 1 and z == x + 2, do: true
   def has_sequence?([_x | rest]), do: has_sequence?(rest)
   def has_sequence?(_), do: false
 
