@@ -31,7 +31,6 @@ defmodule CodeAdvent.DayFourteen.PartTwo do
   def winning_deer_after(deer, time) do
     [winning_deer] = deer
       |> ordered_deer_after(time)
-      |> debug
       |> Enum.take(1)
     winning_deer
   end

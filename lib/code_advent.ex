@@ -1,4 +1,6 @@
 [
+  {"15x2 ", CodeAdvent.DayFifteen.PartTwo},
+  {"15x1 ", CodeAdvent.DayFifteen.PartOne},
   {"14 sub unit 2: ", CodeAdvent.DayFourteen.PartTwo},
   {"14 sub unit 1: ", CodeAdvent.DayFourteen.PartOne},
   {"13__2: ", CodeAdvent.DayThirteen.PartTwo},
