@@ -17,10 +17,10 @@ defmodule CodeAdvent.DayFifteen.PartOne do
       |> String.split("\n", trim: true)
       |> Enum.map(&parse/1)
 
-    combinations = for c1 <- 1..100,
-        c2 <- 1..100,
-        c3 <- 1..100,
-        c4 <- 1..100,
+    combinations = for c1 <- 0..100,
+        c2 <- 0..100,
+        c3 <- 0..100,
+        c4 <- 0..100,
         c1 + c2 + c3 + c4 == 100,
         list = [{c1, i1}, {c2, i2}, {c3, i3}, {c4, i4}],
         list_score = score(list)
