@@ -122,13 +122,23 @@ defmodule DayFourteenTest do
     ]
   end
 
-  test "second part example returns expected results" do
-    deer = [
-      %PartTwo.Reindeer{name: "Dancer",speed: 16, time_at_rest: 162, time_at_speed: 11, sprint_left: 11},
-      %PartTwo.Reindeer{name: "Comet", speed: 14, time_at_rest: 127, time_at_speed: 10, sprint_left: 10}
-    ]
+  @part_two_deer [
+    %PartTwo.Reindeer{name: "Dancer",speed: 16, time_at_rest: 162, time_at_speed: 11, sprint_left: 11},
+    %PartTwo.Reindeer{name: "Comet", speed: 14, time_at_rest: 127, time_at_speed: 10, sprint_left: 10}
+  ]
 
-    [winner, loser] = PartTwo.ordered_deer_after(deer, 1000)
+  test "Comet gets their first point in the 2nd example at the 140th second" do
+    [winner, loser] = PartTwo.ordered_deer_after(@part_two_deer, 140)
+
+    assert winner.name == "Dancer"
+    assert winner.points == 139
+    assert loser.name == "Comet"
+    assert loser.points == 1
+
+  end
+
+  test "second part example returns expected results" do
+    [winner, loser] = PartTwo.ordered_deer_after(@part_two_deer, 1000)
 
     assert winner.name == "Dancer"
     assert winner.points == 689
