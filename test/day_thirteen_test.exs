@@ -1,6 +1,8 @@
 defmodule DayThirteenTest do
   use ExUnit.Case
   alias CodeAdvent.DayThirteen.PartOne
+  alias CodeAdvent.DayThirteen.Parser
+  alias CodeAdvent.DayThirteen.HappyCalc
   alias CodeAdvent.DayThirteen.Parser.Data
 
 
@@ -10,7 +12,7 @@ defmodule DayThirteenTest do
     Bob would gain 93 happiness units by sitting next to Alice.
     Carol would lose 54 happiness units by sitting next to Alice.
     """
-    data = PartOne.parse_data(input)
+    data = Parser.parse_data(input)
     assert data.people == ["Alice", "Bob", "Carol"]
   end
 
@@ -21,7 +23,7 @@ defmodule DayThirteenTest do
     Bob would gain 93 happiness units by sitting next to Alice.
     Carol would lose 54 happiness units by sitting next to Alice.
     """
-    data = PartOne.parse_data(input)
+    data = Parser.parse_data(input)
     assert data.hapiness["Alice"] == %{"Bob" => -2, "Carol" => 6}
     assert data.hapiness["Bob"] == %{"Alice" => 93}
   end
@@ -35,7 +37,7 @@ defmodule DayThirteenTest do
          "Carol" => %{"Alice" => 2, "Bob" => -1}
        }
      }
-     assert PartOne.happiness(["Alice", "Bob", "Carol"], data) == 2
+     assert HappyCalc.happiness(["Alice", "Bob", "Carol"], data) == 2
   end
 
   test "Works for example given" do

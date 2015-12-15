@@ -15,11 +15,21 @@ defmodule CodeAdvent.DayThirteen.Parser do
       |> Enum.uniq
 
     hapiness = line_data
-      |> Enum.reduce(%{}, &add_hapiness_entry/2)
+      |> Enum.reduce(%{}, &hapiness_entry_reducer/2)
     %Data{people: people, hapiness: hapiness}
   end
 
-  defp add_hapiness_entry(entry, happy_map) do
+  def add_hapiness_entry(happy_map, entry) do
+    happy_map
+      |> ensure_entry_exists(entry["person"])
+      |> Map.update!(entry["person"], &update_person_happy_map(&1, entry))
+  end
+
+  defp hapiness_entry_reducer(entry, happy_map) do
+    add_hapiness_entry(happy_map, entry)
+  end
+
+  def add_hapiness_entry(entry, happy_map) do
     happy_map
       |> ensure_entry_exists(entry["person"])
       |> Map.update!(entry["person"], &update_person_happy_map(&1, entry))
@@ -29,6 +39,7 @@ defmodule CodeAdvent.DayThirteen.Parser do
     Map.put(map, entry["neighbour"], hapiness_change(entry))
   end
 
+  defp hapiness_change(%{"amount" => "0"}), do: 0
   defp hapiness_change(%{"sign" => "gain", "amount" => x}), do: to_int!(x)
   defp hapiness_change(%{"sign" => "lose", "amount" => x}), do: -to_int!(x)
 

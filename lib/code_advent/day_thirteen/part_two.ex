@@ -1,9 +1,10 @@
-defmodule CodeAdvent.DayThirteen.PartOne do
+defmodule CodeAdvent.DayThirteen.PartTwo do
   @file_path "lib/code_advent/day_thirteen/input_data.txt"
 
   alias CodeAdvent.DayThirteen.Parser
   alias CodeAdvent.DayThirteen.Parser.Data
   alias CodeAdvent.DayThirteen.HappyCalc
+  alias CodeAdvent.DayThirteen.Adder
   alias CodeAdvent.DayThirteen.Permutations
 
   def run() do
@@ -13,7 +14,10 @@ defmodule CodeAdvent.DayThirteen.PartOne do
   end
 
   def run(string) do
-    data = Parser.parse_data(string)
+    data = string
+      |> Parser.parse_data()
+      |> Adder.add_ambivalent_self
+
     [highest] = data.people
       |> Permutations.of_list()
       |> Enum.map(fn order -> HappyCalc.happiness(order, data) end)
