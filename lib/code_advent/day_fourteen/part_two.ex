@@ -14,18 +14,32 @@ defmodule CodeAdvent.DayFourteen.PartTwo do
   end
 
   def run() do
-    deer = @file_path
+    @file_path
       |> File.read!
+      |> run(duration: 2503)
+  end
+
+  def run(input, duration: duration) do
+    winning_deer = input
       |> String.split("\n", trim: true)
       |> Enum.map(&parse/1)
+      |> winning_deer_after(duration)
 
-    [winning_score] = 1..2503
+    winning_deer.points |> as_string
+  end
+
+  def winning_deer_after(deer, time) do
+    [winning_deer] = deer
+      |> ordered_deer_after(time)
+      |> debug
+      |> Enum.take(1)
+    winning_deer
+  end
+
+  def ordered_deer_after(deer, time) do
+    1..time
       |> Enum.reduce(deer, &run_all_deer/2)
       |> Enum.sort(fn (a,b) -> a.points > b.points end)
-      |> Stream.map(fn single_deer -> single_deer.points end)
-      |> Enum.take(1)
-
-    winning_score |> as_string
   end
 
   def parse(line) do
