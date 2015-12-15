@@ -46,7 +46,7 @@ defmodule DayFourteenTest do
       speed: 1,
       time_at_speed: 10,
       time_at_rest: 5,
-      distance_covered: 0,
+      distance: 0,
       sprint_left: 10,
       rest_left: 0
     }
@@ -54,7 +54,7 @@ defmodule DayFourteenTest do
       speed: 1,
       time_at_speed: 10,
       time_at_rest: 5,
-      distance_covered: 1,
+      distance: 1,
       sprint_left: 9,
       rest_left: 0
     }
@@ -65,7 +65,7 @@ defmodule DayFourteenTest do
       speed: 1,
       time_at_speed: 10,
       time_at_rest: 5,
-      distance_covered: 0,
+      distance: 0,
       sprint_left: 1,
       rest_left: 0
     }
@@ -73,7 +73,7 @@ defmodule DayFourteenTest do
       speed: 1,
       time_at_speed: 10,
       time_at_rest: 5,
-      distance_covered: 1,
+      distance: 1,
       sprint_left: 0,
       rest_left: 5
     }
@@ -84,7 +84,7 @@ defmodule DayFourteenTest do
       speed: 1,
       time_at_speed: 10,
       time_at_rest: 5,
-      distance_covered: 0,
+      distance: 0,
       sprint_left: 0,
       rest_left: 5
     }
@@ -92,7 +92,7 @@ defmodule DayFourteenTest do
       speed: 1,
       time_at_speed: 10,
       time_at_rest: 5,
-      distance_covered: 0,
+      distance: 0,
       sprint_left: 0,
       rest_left: 4
     }
@@ -100,25 +100,25 @@ defmodule DayFourteenTest do
 
   test "top deer can be given a point" do
     deers = [
-      %PartTwo.Reindeer{name: "worst", distance_covered: 2, points: 0},
-      %PartTwo.Reindeer{name: "best", distance_covered: 5, points: 0}
+      %PartTwo.Reindeer{name: "worst", distance: 2, points: 0},
+      %PartTwo.Reindeer{name: "best", distance: 5, points: 0}
     ]
     assert PartTwo.add_point_to_top_deer(deers) == [
-      %PartTwo.Reindeer{name: "best", distance_covered: 5, points: 1},
-      %PartTwo.Reindeer{name: "worst", distance_covered: 2, points: 0}
+      %PartTwo.Reindeer{name: "best", distance: 5, points: 1},
+      %PartTwo.Reindeer{name: "worst", distance: 2, points: 0}
     ]
   end
 
   test "tied top deer get points" do
     deers = [
-      %PartTwo.Reindeer{name: "worst", distance_covered: 2, points: 0},
-      %PartTwo.Reindeer{name: "best", distance_covered: 5, points: 0},
-      %PartTwo.Reindeer{name: "best", distance_covered: 5, points: 0}
+      %PartTwo.Reindeer{name: "worst", distance: 2, points: 0},
+      %PartTwo.Reindeer{name: "best", distance: 5, points: 0},
+      %PartTwo.Reindeer{name: "best", distance: 5, points: 0}
     ]
     assert PartTwo.add_point_to_top_deer(deers) == [
-      %PartTwo.Reindeer{name: "best", distance_covered: 5, points: 1},
-      %PartTwo.Reindeer{name: "best", distance_covered: 5, points: 1},
-      %PartTwo.Reindeer{name: "worst", distance_covered: 2, points: 0}
+      %PartTwo.Reindeer{name: "best", distance: 5, points: 1},
+      %PartTwo.Reindeer{name: "best", distance: 5, points: 1},
+      %PartTwo.Reindeer{name: "worst", distance: 2, points: 0}
     ]
   end
 

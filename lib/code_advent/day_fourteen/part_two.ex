@@ -7,7 +7,7 @@ defmodule CodeAdvent.DayFourteen.PartTwo do
               speed: 0,
               time_at_speed: 1,
               time_at_rest: 1,
-              distance_covered: 0,
+              distance: 0,
               sprint_left: 0,
               rest_left: 0,
               points: 0
@@ -21,6 +21,7 @@ defmodule CodeAdvent.DayFourteen.PartTwo do
 
     [winning_score] = 1..2503
       |> Enum.reduce(deer, &run_all_deer/2)
+      |> Enum.sort(fn (a,b) -> a.points > b.points end)
       |> Stream.map(fn single_deer -> single_deer.points end)
       |> Enum.take(1)
 
@@ -52,14 +53,18 @@ defmodule CodeAdvent.DayFourteen.PartTwo do
   end
 
   def add_point_to_top_deer(deers) do
-    [top_deer | rest] = deers
-      |> Enum.sort(fn (a,b) -> a.distance_covered > b.distance_covered end)
-    [%Reindeer{top_deer | points: top_deer.points + 1}| rest]
+    [top_deer | _] = deers
+      |> Enum.sort(fn (a,b) -> a.distance > b.distance end)
+    {leaders, rest} = deers
+      |> Enum.partition(fn deer -> deer.distance == top_deer.distance end)
+    leaders
+      |> Enum.map(fn deer -> %Reindeer{deer | points: top_deer.points + 1} end)
+      |> Enum.concat(rest)
   end
 
   defp run_deer(deer) do
     moved_deer = %Reindeer{ deer |
-      distance_covered: deer.distance_covered + deer.speed,
+      distance: deer.distance + deer.speed,
       sprint_left: deer.sprint_left - 1
     }
     if moved_deer.sprint_left == 0 do
