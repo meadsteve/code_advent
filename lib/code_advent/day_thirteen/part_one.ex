@@ -1,11 +1,8 @@
 defmodule CodeAdvent.DayThirteen.PartOne do
   @file_path "lib/code_advent/day_thirteen/input_data.txt"
 
-  @input_pattern ~r/(?<person>[a-z]+) would (?<sign>[a-z]+) (?<amount>[0-9]+) happiness units by sitting next to (?<neighbour>[a-z]+)\./i
-
-  defmodule Data do
-    defstruct people: [], hapiness: %{}
-  end
+  alias CodeAdvent.DayThirteen.Parser
+  alias CodeAdvent.DayThirteen.Parser.Data
 
   defmodule Permutations do
     def of_list([]) do
@@ -18,49 +15,40 @@ defmodule CodeAdvent.DayThirteen.PartOne do
     end
   end
 
-
   def run() do
-
+    @file_path
+    |> File.read!
+    |> run
   end
 
-  def parse_data(string) do
-    line_data = string
-      |> String.split("\n", trim: true)
-      |> Enum.map(&Regex.named_captures(@input_pattern, &1))
+  def run(string) do
+    data = Parser.parse_data(string)
+    [highest] = data.people
+      |> Permutations.of_list()
+      |> Enum.map(fn order -> happiness(order, data) end)
+      |> Enum.sort(&(&1 > &2))
+      |> Enum.take(1)
 
-    people = line_data
-      |> Enum.map(fn %{"person" => person} -> person end)
-      |> Enum.uniq
-
-    hapiness = line_data
-      |> Enum.reduce(%{}, &add_hapiness_entry/2)
-    %Data{people: people, hapiness: hapiness}
+    highest |> answer_as_string
   end
 
-  defp add_hapiness_entry(entry, happy_map) do
-    happy_map
-      |> check_entry_exists(entry["person"])
-      |> Map.update!(entry["person"], &update_person_happy_map(&1, entry))
+  def parse_data(string), do: Parser.parse_data(string)
+
+  def happiness([first | rest], data) do
+    happiness([first | rest], data, total: 0, first: first)
   end
 
-  defp update_person_happy_map(map, entry) do
-    Map.put(map, entry["neighbour"], hapiness_change(entry))
+  defp happiness([last], data, total: total, first: first) do
+    total + happiness_change(last, first, data)
   end
 
-  defp hapiness_change(%{"sign" => "gain", "amount" => x}), do: to_int!(x)
-  defp hapiness_change(%{"sign" => "lose", "amount" => x}), do: -to_int!(x)
-
-  defp to_int!(string) do
-    {int, ""} = Integer.parse(string)
-    int
+  defp happiness([next, neighbour | rest], data, total: total, first: first) do
+    new_total = total + happiness_change(next, neighbour, data)
+    happiness([neighbour | rest], data, total: new_total, first: first)
   end
 
-  defp check_entry_exists(happy_map, person) do
-    if !Map.has_key?(happy_map, person) do
-      happy_map |> Map.put_new(person, %{})
-    else
-      happy_map
-    end
+  defp happiness_change(a, b, data) do
+    data.hapiness[a][b] + data.hapiness[b][a]
   end
 
   defp answer_as_string(thing), do: "#{inspect thing}"
