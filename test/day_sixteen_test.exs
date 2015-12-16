@@ -35,7 +35,7 @@ defmodule DaySixteenTest do
       ]
     }
     # Wrong number of cars
-    assert PartOne.invalid_aunt?(aunt) == true
+    assert PartOne.valid_aunt?(aunt) == false
   end
 
 

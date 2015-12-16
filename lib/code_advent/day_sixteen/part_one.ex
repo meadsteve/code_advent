@@ -21,12 +21,13 @@ defmodule CodeAdvent.DaySixteen.PartOne do
   end
 
   def run() do
-    data = @file_path
+    [aunt] = @file_path
       |> File.read!
       |> String.split("\n", trim: true)
-      |> Enum.each(&parse/1)
+      |> Enum.map(&parse/1)
+      |> Enum.filter(&valid_aunt?/1)
 
-    :ok |> as_string
+    aunt |> as_string
   end
 
   def parse(line) do
@@ -49,11 +50,11 @@ defmodule CodeAdvent.DaySixteen.PartOne do
     end
   end
 
-  def invalid_aunt?(aunt) do
+  def valid_aunt?(aunt) do
     mistakes = aunt.facts
       |> Enum.filter(&invalid_fact?/1)
       |> Enum.count
-    mistakes > 0
+    mistakes == 0
   end
 
   defp to_int!(string) do
@@ -61,5 +62,6 @@ defmodule CodeAdvent.DaySixteen.PartOne do
     int
   end
 
+  defp as_string(%Aunt{} = aunt), do: "#{aunt.name}"
   defp as_string(n), do: "#{n}"
 end
