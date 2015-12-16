@@ -50,9 +50,9 @@ defmodule CodeAdvent.DaySixteen.PartOne do
     end
   end
 
-  def valid_aunt?(aunt) do
+  def valid_aunt?(aunt, fact_validator \\ &invalid_fact?/1) do
     mistakes = aunt.facts
-      |> Enum.filter(&invalid_fact?/1)
+      |> Enum.filter(fact_validator)
       |> Enum.count
     mistakes == 0
   end
