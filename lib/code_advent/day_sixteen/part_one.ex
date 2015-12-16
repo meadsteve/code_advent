@@ -20,12 +20,12 @@ defmodule CodeAdvent.DaySixteen.PartOne do
               facts: []
   end
 
-  def run() do
+  def run(aunt_validator \\ &valid_aunt?/1) do
     [aunt] = @file_path
       |> File.read!
       |> String.split("\n", trim: true)
       |> Enum.map(&parse/1)
-      |> Enum.filter(&valid_aunt?/1)
+      |> Enum.filter(aunt_validator)
 
     aunt |> as_string
   end
