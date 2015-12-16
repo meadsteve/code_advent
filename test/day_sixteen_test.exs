@@ -16,5 +16,27 @@ defmodule DaySixteenTest do
     }
   end
 
+  test "Can invalidate a fact" do
+    fact = {"goldfish", 6}
+    assert PartOne.invalid_fact?(fact) == true
+  end
+
+  test "won't invalidate unknown facts" do
+    fact = {"steves", 1}
+    assert PartOne.invalid_fact?(fact) == false
+  end
+
+  test "Can invalidate an aunt" do
+    aunt = %PartOne.Aunt{
+      name: "Sue 1",
+      facts: [
+        {"goldfish", 5},
+        {"cars", 9}
+      ]
+    }
+    # Wrong number of cars
+    assert PartOne.invalid_aunt?(aunt) == true
+  end
+
 
 end
