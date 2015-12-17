@@ -4,18 +4,17 @@ defmodule CodeAdvent.DaySeventeen.PartOne do
   @goal_nog 150
 
   def run() do
-    @file_path
-      |> File.read!
-      |> run
+    get_container_options_from_file
+      |> Enum.count
+      |> answer_as_string
   end
 
-  def run(string) do
-    string
+  def get_container_options_from_file do
+    @file_path
+      |> File.read!
       |> String.split("\n", trim: true)
       |> Enum.map(&parse_int!/1)
       |> container_options(@goal_nog)
-      |> Enum.count
-      |> answer_as_string
   end
 
   def container_options(containers, target) do
