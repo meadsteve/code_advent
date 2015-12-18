@@ -1,4 +1,4 @@
-defmodule CodeAdvent.DayEighteen.PartTwo do
+defmodule CodeAdvent.DayEighteen.PartOne do
   alias CodeAdvent.DayEighteen.Grid
   alias CodeAdvent.DayEighteen.Parser
   alias CodeAdvent.DayEighteen.Runner
@@ -9,11 +9,6 @@ defmodule CodeAdvent.DayEighteen.PartTwo do
     grid = @file_path
       |> File.read!
       |> Parser.parse
-      |> Grid.stick_on(0, 0)
-      |> Grid.stick_on(0, 99)
-      |> Grid.stick_on(99, 0)
-      |> Grid.stick_on(99, 99)
-
     1..100
       |> Enum.reduce(grid, fn(_, new_grid) -> Runner.next(new_grid) end)
       |> Grid.light_count

@@ -1,6 +1,7 @@
 defmodule CodeAdvent.DayEighteen.Grid do
   defstruct size: nil,
-            cells: %{}
+            cells: %{},
+            stuck_on_cells: %{}
 
   def new(size \\ 100) when is_number(size) do
     %__MODULE__{size: size}
@@ -41,11 +42,27 @@ defmodule CodeAdvent.DayEighteen.Grid do
     end
   end
 
+  def stick_on(%__MODULE__{stuck_on_cells: stuck_on_cells} = grid, x, y) do
+    updated_grid = grid
+      |> set(x, y, :on)
+    updated_stuck_on_cells = stuck_on_cells
+      |> Map.put(x + (y * grid.size), true)
+    %{updated_grid | stuck_on_cells: updated_stuck_on_cells}
+  end
+
   def set(%__MODULE__{size: size} = grid, x, y, value)
   when x < size and y < size and x >= 0 and y >= 0
   do
-    updated_cells = grid.cells
-      |> Map.put(x + (y * grid.size), value)
-    %{grid | cells: updated_cells}
+    if (!stuck_on?(grid, x, y)) do
+      updated_cells = grid.cells
+        |> Map.put(x + (y * grid.size), value)
+      %{grid | cells: updated_cells}
+    else
+      grid
+    end
+  end
+
+  defp stuck_on?(%__MODULE__{} = grid, x, y) do
+    Map.has_key?(grid.stuck_on_cells, x + (y * grid.size))
   end
 end

@@ -32,6 +32,13 @@ defmodule DayEighteenTest do
     assert value == :off
   end
 
+  test "cells can get 'stuck' on" do
+    grid = Grid.new
+      |> Grid.stick_on(0, 0)
+      |> Grid.set(0, 0, :off)
+    assert Grid.get(grid, 0, 0) == :on
+  end
+
   test "Grid can be queried for neighbours values" do
     neighbours = Grid.new
       |> Grid.set(4, 5, :on)
