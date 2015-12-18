@@ -15,6 +15,12 @@ defmodule CodeAdvent.DayEighteen.Grid do
     for x <- 0..max, y <- 0..max, do: {x, y}
   end
 
+  def light_count(%__MODULE__{cells: cells}) do
+    cells
+      |> Enum.filter(fn {_, x} -> x == :on end)
+      |> Enum.count
+  end
+
   def get(%__MODULE__{cells: cells, size: size}, x, y)
   when x < size and y < size and x >= 0 and y >= 0
   do

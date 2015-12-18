@@ -44,6 +44,13 @@ defmodule DayEighteenTest do
     assert off_neighbours == 6
   end
 
+  test "Grid can count switched on lights" do
+    grid = Grid.new
+      |> Grid.set(5, 5, :on)
+      |> Grid.set(4, 5, :on)
+    assert Grid.light_count(grid) == 2
+  end
+
   test ":on light with two :on neighbours stays on" do
     grid = Grid.new
       |> Grid.set(4, 5, :on)
