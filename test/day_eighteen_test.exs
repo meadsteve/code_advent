@@ -1,6 +1,7 @@
 defmodule DayEighteenTest do
   use ExUnit.Case
   alias CodeAdvent.DayEighteen.Grid
+  alias CodeAdvent.DayEighteen.Switcher
 
   test "Grid values can be accessed by x & y and start :off" do
     value = Grid.new
@@ -39,6 +40,46 @@ defmodule DayEighteenTest do
     off_neighbours = neighbours |> Enum.filter(&(&1 == :off)) |> Enum.count
     assert on_neighbours == 2
     assert off_neighbours == 6
+  end
+
+  test ":on light with two :on neighbours stays on" do
+    grid = Grid.new
+      |> Grid.set(4, 5, :on)
+      |> Grid.set(5, 4, :on)
+      |> Grid.set(4, 4, :on)
+
+    assert Switcher.next_value(grid, 4, 4) == :on
+  end
+
+  test ":on light with three :on neighbours stays on" do
+    grid = Grid.new
+      |> Grid.set(4, 5, :on)
+      |> Grid.set(5, 4, :on)
+      |> Grid.set(3, 4, :on)
+      |> Grid.set(4, 4, :on)
+
+    assert Switcher.next_value(grid, 4, 4) == :on
+  end
+
+  test ":on light with four :on neighbours switches :off" do
+    grid = Grid.new
+      |> Grid.set(4, 5, :on)
+      |> Grid.set(5, 4, :on)
+      |> Grid.set(3, 4, :on)
+      |> Grid.set(4, 3, :on)
+      |> Grid.set(4, 4, :on)
+
+    assert Switcher.next_value(grid, 4, 4) == :off
+  end
+
+  test ":off light with three :on neighbours switches on" do
+    grid = Grid.new
+      |> Grid.set(4, 5, :on)
+      |> Grid.set(5, 4, :on)
+      |> Grid.set(3, 4, :on)
+      |> Grid.set(4, 4, :off)
+
+    assert Switcher.next_value(grid, 4, 4) == :on
   end
 
 end

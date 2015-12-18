@@ -1,9 +1,9 @@
 defmodule CodeAdvent.DayEighteen.Grid do
-  defstruct size: 100,
+  defstruct size: nil,
             cells: %{}
 
-  def new do
-    %__MODULE__{}
+  def new(size \\ 100) when is_number(size) do
+    %__MODULE__{size: size}
   end
 
   def get(%__MODULE__{cells: cells, size: size}, x, y)
