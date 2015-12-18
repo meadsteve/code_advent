@@ -15,18 +15,18 @@ defmodule DayEighteenTest do
     assert value == :on
   end
 
-  test "Grid values over a boundary wrap around" do
+  test "Grid values over a boundary are off" do
     value = Grid.new
       |> Grid.set(0, 0, :on)
       |> Grid.get(100, 0)
-    assert value == :on
+    assert value == :off
   end
 
-  test "Grid values under a boundary wrap around" do
+  test "Grid values under a boundary are off" do
     value = Grid.new
       |> Grid.set(0, 99, :on)
       |> Grid.get(0, -1)
-    assert value == :on
+    assert value == :off
   end
 
   test "Grid can be queried for neighbours values" do

@@ -17,21 +17,8 @@ defmodule CodeAdvent.DayEighteen.Grid do
     end
   end
 
-  def get(%__MODULE__{size: size} = grid, x, y) when x >= size do
-    get(grid, x - size, y)
-  end
+  def get(%__MODULE__{}, _, _), do: :off
 
-  def get(%__MODULE__{size: size} = grid, x, y) when y >= size do
-    get(grid, x, y - size)
-  end
-
-  def get(%__MODULE__{size: size} = grid, x, y) when x < 0 do
-    get(grid, x + size, y)
-  end
-
-  def get(%__MODULE__{size: size} = grid, x, y) when y < 0 do
-    get(grid, x, y + size)
-  end
 
   def get_neighbours(%__MODULE__{} = grid, x, y) do
     for xd <- -1..1, yd <- -1..1, (yd != 0) or (xd != 0) do
