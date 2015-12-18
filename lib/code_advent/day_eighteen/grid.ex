@@ -6,6 +6,15 @@ defmodule CodeAdvent.DayEighteen.Grid do
     %__MODULE__{size: size}
   end
 
+  def size(grid) do
+    grid.size
+  end
+
+  def coord_tuples(grid) do
+    max = size(grid) - 1
+    for x <- 0..max, y <- 0..max, do: {x, y}
+  end
+
   def get(%__MODULE__{cells: cells, size: size}, x, y)
   when x < size and y < size and x >= 0 and y >= 0
   do
@@ -26,7 +35,9 @@ defmodule CodeAdvent.DayEighteen.Grid do
     end
   end
 
-  def set(%__MODULE__{} = grid, x, y, value) do
+  def set(%__MODULE__{size: size} = grid, x, y, value)
+  when x < size and y < size and x >= 0 and y >= 0
+  do
     updated_cells = grid.cells
       |> Map.put(x + (y * grid.size), value)
     %{grid | cells: updated_cells}

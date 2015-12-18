@@ -2,6 +2,8 @@ defmodule DayEighteenTest do
   use ExUnit.Case
   alias CodeAdvent.DayEighteen.Grid
   alias CodeAdvent.DayEighteen.Switcher
+  alias CodeAdvent.DayEighteen.Parser
+  alias CodeAdvent.DayEighteen.Runner
 
   test "Grid values can be accessed by x & y and start :off" do
     value = Grid.new
@@ -80,6 +82,46 @@ defmodule DayEighteenTest do
       |> Grid.set(4, 4, :off)
 
     assert Switcher.next_value(grid, 4, 4) == :on
+  end
+
+  test "parser returns expected grid" do
+    input = """
+    .#.#.#
+    ...##.
+    #....#
+    ..#...
+    #.#..#
+    ####..
+    """
+    grid = Parser.parse(input)
+
+    assert Grid.get(grid, 0, 0) == :off
+    assert Grid.get(grid, 1, 0) == :on
+    assert Grid.get(grid, 3, 1) == :on
+
+  end
+
+  test "Runner produces the example given" do
+    starting_string = """
+    .#.#.#
+    ...##.
+    #....#
+    ..#...
+    #.#..#
+    ####..
+    """
+    step_one_string = """
+    ..##..
+    ..##.#
+    ...##.
+    ......
+    #.....
+    #.##..
+    """
+    starting_grid = Parser.parse(starting_string)
+    step_one_grid = Parser.parse(step_one_string)
+
+    assert Runner.next(starting_grid) == step_one_grid
   end
 
 end
