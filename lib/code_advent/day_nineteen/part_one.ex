@@ -20,6 +20,13 @@ defmodule CodeAdvent.DayNineteen.PartOne do
     generate_molecules(data, data.goal_string)
   end
 
+  def generate_molecules(data, starting_point) when is_list(starting_point) do
+    longest_allowed = String.length(data.goal_string)
+    starting_point
+      |> Enum.flat_map(&generate_molecules(data, &1))
+      |> Enum.uniq
+  end
+
   def generate_molecules(data, starting_point) do
     data.replacements
       |> Enum.flat_map(&new_for_replacements(&1, starting_point))
@@ -36,8 +43,18 @@ defmodule CodeAdvent.DayNineteen.PartOne do
       |> String.split(find)
     swap_options = (Enum.count(parts) - 1)
     case swap_options do
-      0 -> []
-      max -> 1..max |> Enum.map(&join_swap(parts, find, replace, &1))
+      0 ->
+        []
+      max ->
+        1..max
+          |> Enum.map(&async_join_swap(parts, find, replace, &1))
+          |> Enum.map(&Task.await/1)
+    end
+  end
+
+  defp async_join_swap(parts, regular_join, special_join, special_position) do
+    Task.async fn ->
+      join_swap(parts, regular_join, special_join, special_position)
     end
   end
 

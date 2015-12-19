@@ -1,6 +1,7 @@
 defmodule DayNineteenTest do
   use ExUnit.Case
   alias CodeAdvent.DayNineteen.PartOne
+  alias CodeAdvent.DayNineteen.PartTwo
 
   test "The last line of the input is the sarting string" do
     string = """
@@ -69,6 +70,23 @@ defmodule DayNineteenTest do
       |> PartOne.parse
       |> PartOne.calibrate
     assert Enum.count(molecules) == 7
+  end
+
+  test "Part two hoho example works" do
+    string = """
+    e => H
+    e => O
+    H => HO
+    H => OH
+    O => HH
+    O => OOOOH
+
+    HOHOHO
+    """
+    steps = string
+      |> PartOne.parse
+      |> PartTwo.iterations_to_find
+    assert steps == 6
   end
 
 
