@@ -1,4 +1,5 @@
 [
+  {"20 1", CodeAdvent.DayTwenty.PartOne},
   {"ninteen two", CodeAdvent.DayNineteen.PartTwo},
   {"ninteen one", CodeAdvent.DayNineteen.PartOne},
   {"ten and eight sub part two", CodeAdvent.DayEighteen.PartTwo},
