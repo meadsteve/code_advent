@@ -49,13 +49,7 @@ defmodule CodeAdvent.DayTwentyOne.PartOne do
   end
 
   def run() do
-    ring_options = [[]] ++ Extra.combination(1, @rings) ++ Extra.combination(2, @rings)
-
-    players = for rings <- ring_options, weapon <- @weapons, armor <- @armor do
-      Person.new_player |> buy([weapon, armor | rings])
-    end
-
-    [cheapest_game] = players
+    [cheapest_game] = player_options()
       |> Enum.map(&Game.new(&1))
       |> Enum.map(&play_out/1)
       |> Enum.filter(fn game -> winner(game) == :player end)
@@ -63,6 +57,16 @@ defmodule CodeAdvent.DayTwentyOne.PartOne do
       |> Enum.take(1)
 
     cheapest_game.player.money_spent |> as_string
+  end
+
+  def player_options do
+    ring_options = [[]]
+    ++ Extra.combination(1, @rings)
+    ++ Extra.combination(2, @rings)
+
+    for rings <- ring_options, weapon <- @weapons, armor <- @armor do
+      Person.new_player |> buy([weapon, armor | rings])
+    end
   end
 
   def play_out(%Game{} = start_game) do

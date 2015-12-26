@@ -1,4 +1,5 @@
 [
+  {"21-2:", CodeAdvent.DayTwentyOne.PartTwo},
   {"21-1:", CodeAdvent.DayTwentyOne.PartOne},
   {"20 1", CodeAdvent.DayTwenty.PartOne},
   {"ninteen two", CodeAdvent.DayNineteen.PartTwo},
@@ -42,4 +43,4 @@
   |> Stream.map(fn {intro, module} -> {intro, module.run()} end)
   |> Stream.map(fn {intro, result} -> intro <> " " <> result end)
   |> Stream.each(&IO.puts/1)
-  |> Enum.take(1)
+  |> Enum.take(2)
