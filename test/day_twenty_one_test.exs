@@ -88,4 +88,17 @@ defmodule DayTwentyOneTest do
     assert updated_person.damage == 16
   end
 
+  test "multiple items can be bought" do
+    damage_change = 5
+    armor_change = 3
+    items = [
+      {:ring, "Item 1", 0, 0, armor_change},
+      {:ring, "Item 2", 0, damage_change, 0}
+    ]
+    starting_person =  %PartOne.Person{armor: 10, damage: 11}
+    updated_person = starting_person |> PartOne.buy items
+    assert updated_person.armor == 13
+    assert updated_person.damage == 16
+  end
+
 end

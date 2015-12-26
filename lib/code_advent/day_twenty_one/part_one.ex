@@ -1,4 +1,5 @@
 defmodule CodeAdvent.DayTwentyOne.PartOne do
+  alias CodeAdvent.DayTwentyOne.PartOne.Extra
 
   # Name  Cost  Damage  Armor
   @weapons [
@@ -43,13 +44,25 @@ defmodule CodeAdvent.DayTwentyOne.PartOne do
     defstruct player: nil,
               boss: nil
 
-    def new do
-      %__MODULE__{player: Person.new_player, boss: Person.new_boss}
-    end
+    def new, do: %__MODULE__{player: Person.new_player, boss: Person.new_boss}
+    def new(player), do: %__MODULE__{player: player, boss: Person.new_boss}
   end
 
   def run() do
+    ring_options = [[]] ++ Extra.combination(1, @rings) ++ Extra.combination(2, @rings)
 
+    players = for rings <- ring_options, weapon <- @weapons, armor <- @armor do
+      Person.new_player |> buy([weapon, armor | rings])
+    end
+
+    [cheapest_game] = players
+      |> Enum.map(&Game.new(&1))
+      |> Enum.map(&play_out/1)
+      |> Enum.filter(fn game -> winner(game) == :player end)
+      |> Enum.sort(fn a, b -> a.player.money_spent < b.player.money_spent end)
+      |> Enum.take(1)
+
+    cheapest_game.player.money_spent |> as_string
   end
 
   def play_out(%Game{} = start_game) do
@@ -89,6 +102,10 @@ defmodule CodeAdvent.DayTwentyOne.PartOne do
 
   defp damage_dealt(%Person{} = defender, %Person{} = attacker) do
     max(attacker.damage - defender.armor, 1)
+  end
+
+  def buy(%Person{} = buyer, items) when is_list(items) do
+    items |> Enum.reduce(buyer, &buy(&2, &1))
   end
 
   def buy(%Person{} = buyer, {_item_type, name, cost, d_change, a_change}) do
